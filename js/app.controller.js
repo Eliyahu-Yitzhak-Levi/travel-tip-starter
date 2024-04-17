@@ -34,7 +34,7 @@ function onInit() {
 
 function renderLocs(locs) {
     const selectedLocId = getLocIdFromQueryParams()
-    // console.log('locs:', locs)
+    console.log('locs:', locs)
     var strHTML = locs.map(loc => {
         const className = (loc.id === selectedLocId) ? 'active' : ''
         return `
@@ -108,6 +108,9 @@ function onAddLoc(geo) {
         rate: +prompt(`Rate (1-5)`, '3'),
         geo
     }
+
+    console.log(loc.geo);
+
     locService.save(loc)
         .then((savedLoc) => {
             flashMsg(`Added Location (id: ${savedLoc.id})`)
