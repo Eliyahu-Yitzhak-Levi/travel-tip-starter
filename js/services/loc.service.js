@@ -101,6 +101,19 @@ function getLocCountByRateMap() {
 
 function setSortBy(sortBy = {}) {
     gSortBy = sortBy
+    if (sortBy.prop === 'time') {
+        return storageService.query(DB_KEY)
+            .then(locs => {
+                locs.sort((loc1, loc2) => {
+                    if (sortBy.isDesc) {
+                        return loc2.updatedAt - loc1.updatedAt
+                    } else {
+                        return loc1.updatedAt - loc2.updatedAt
+                    }
+                })
+                return locs
+            })
+    }
 }
 
 function _createLocs() {
