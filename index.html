@@ -66,6 +66,28 @@
                 </section>
             </section>
         </div>
+
+
+
+        <!--! ADD LOC - MODAL -->
+
+        <dialog class="add-loc-modal">
+            <h3>Add Location</h3>
+            <form class="form-add-loc" onsubmit="onAddLoc(event)">
+                <label>
+                    Name:
+                    <input type="text" name="name" required />
+                </label>
+                <label>
+                    Rate:
+                    <input type="number" name="rate" min="0" max="5" required />
+                </label>
+                <button type="submit">Add</button>
+                <button type="button" onclick="app.closeAddLocModal()">cancel</button>
+            </form>
+        </dialog>
+
+
     </main>
     <pre class="debug" hidden></pre>
     <div class="user-msg"></div>

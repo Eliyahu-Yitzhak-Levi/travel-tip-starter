@@ -16,6 +16,9 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    gGeo: null,
+
+
 }
 
 function onInit() {
@@ -24,7 +27,7 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             // onPanToTokyo()
-            mapService.addClickListener(onAddLoc)
+            mapService.addClickListener(onMapClick)
         })
         .catch(err => {
             console.error('OOPs:', err)
@@ -99,14 +102,29 @@ function onSearchAddress(ev) {
         })
 }
 
-function onAddLoc(geo) {
-    const locName = prompt('Loc name', geo.address || 'Just a place')
-    if (!locName) return
+
+function onMapClick(geo) {
+    window.app.gGeo = geo
+    document.querySelector('.add-loc-modal').showModal()
+
+}
+function onAddLoc(event) {
+    let locName, locRate
+    // const locName = prompt('Loc name', geo.address || 'Just a place')
+
+    if (event) {
+        event.preventDefault()
+
+        const form = event.target
+        locName = form.name.value
+        locRate = form.rate.value
+    }
+    if (!locName || locRate) return
 
     const loc = {
         name: locName,
-        rate: +prompt(`Rate (1-5)`, '3'),
-        geo
+        rate: locRate,
+        geo: window.app.gGeo
     }
     locService.save(loc)
         .then((savedLoc) => {
